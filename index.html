@@ -20,6 +20,17 @@
   }
   header h1 { font-size: 22px; margin-bottom: 6px; }
   header p { font-size: 14px; opacity: 0.9; }
+  nav {
+    background: #094f39;
+    text-align: center;
+    padding: 10px;
+  }
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+  }
   .hero {
     padding: 40px 20px;
     text-align: center;
@@ -41,6 +52,8 @@
     width: 260px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     text-align: center;
+    text-decoration: none;
+    display: block;
   }
   .card h3 { color: #0b6e4f; margin-bottom: 8px; font-size: 16px; }
   .card p { font-size: 14px; color: #555; }
@@ -61,6 +74,11 @@
   <p>حمایت، آگاهی‌بخشی و خدمات‌رسانی به بیماران هموفیلی استان لرستان</p>
 </header>
 
+<nav>
+  <a href="index.html">صفحه اصلی</a>
+  <a href="about.html">درباره کانون</a>
+</nav>
+
 <section class="hero">
   <h2>به سایت کانون هموفیلی لرستان خوش آمدید</h2>
   <p>
@@ -71,18 +89,18 @@
 </section>
 
 <section class="cards">
-  <div class="card">
+  <a href="about.html" class="card">
     <h3>درباره کانون</h3>
-    <p>آشنایی با تاریخچه، اهداف و فعالیت‌های کانون</p>
-  </div>
-  <div class="card">
+    <p>آشنایی با اهداف و فعالیت‌های کانون</p>
+  </a>
+  <a href="#" class="card">
     <h3>اخبار و اطلاعیه‌ها</h3>
     <p>آخرین اخبار و رویدادهای مرتبط با بیماران هموفیلی</p>
-  </div>
-  <div class="card">
+  </a>
+  <a href="#" class="card">
     <h3>تماس با ما</h3>
     <p>راه‌های ارتباطی با کانون هموفیلی لرستان</p>
-  </div>
+  </a>
 </section>
 
 <footer>
