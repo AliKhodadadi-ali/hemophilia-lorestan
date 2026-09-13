@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اخبار و اطلاعیه‌ها | کانون هموفیلی لرستان</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Tahoma, "Vazirmatn", sans-serif;
+    background: #f7f9fb;
+    color: #222;
+    line-height: 1.9;
+  }
+  header {
+    background: #0b6e4f;
+    color: #fff;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  header img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  header h1 { font-size: 22px; margin-bottom: 6px; }
+  header p { font-size: 14px; opacity: 0.9; }
+  nav {
+    background: #094f39;
+    text-align: center;
+    padding: 10px;
+  }
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+  }
+  .section {
+    padding: 30px 20px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .section h2 {
+    color: #0b6e4f;
+    font-size: 19px;
+    margin-bottom: 18px;
+    border-right: 4px solid #0b6e4f;
+    padding-right: 10px;
+  }
+  .news-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .news-card .date {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  .news-card h3 {
+    color: #0b6e4f;
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+  .news-card p {
+    font-size: 14px;
+    color: #444;
+  }
+  .loading, .empty {
+    text-align: center;
+    color: #888;
+    padding: 30px;
+  }
+  footer {
+    background: #0b6e4f;
+    color: #fff;
+    text-align: center;
+    padding: 16px;
+    font-size: 13px;
+    margin-top: 24px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="Logo.jpg" alt="لوگوی کانون هموفیلی لرستان">
+  <h1>کانون هموفیلی لرستان</h1>
+  <p>حمایت، آگاهی‌بخشی و خدمات‌رسانی به بیماران هموفیلی استان لرستان</p>
+</header>
+
+<nav>
+  <a href="index.html">صفحه اصلی</a>
+  <a href="about.html">درباره کانون</a>
+  <a href="news.html">اخبار</a>
+  <a href="contact.html">تماس با ما</a>
+</nav>
+
+<section class="section">
+  <h2>اخبار و اطلاعیه‌ها</h2>
+  <div id="news-container">
+    <div class="loading">در حال بارگذاری اخبار...</div>
+  </div>
+</section>
+
+<footer>
+  © کانون هموفیلی لرستان — تمامی حقوق محفوظ است
+</footer>
+
+<script>
+const sheetId = "1e1Nj8A4uCjQcJOQnc8eGWjghSuuOJum2iL2J5iyBRcE";
+const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+
+fetch(url)
+  .then(res => res.text())
+  .then(csvText => {
+    const rows = csvText.trim().split("\n").slice(1); // skip header row
+    const container = document.getElementById("news-container");
+    container.innerHTML = "";
+
+    if (rows.length === 0 || (rows.length === 1 && rows[0].trim() === "")) {
+      container.innerHTML = '<div class="empty">فعلاً خبری ثبت نشده است.</div>';
+      return;
+    }
+
+    const parsed = rows.map(row => {
+      const cols = row.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
+      return cols.map(c => c.replace(/^"|"$/g, "").replace(/""/g, '"').trim());
+    }).filter(r => r.length >= 2 && r[1]);
+
+    parsed.reverse().forEach(cols => {
+      const [date, title, text] = cols;
+      const card = document.createElement("div");
+      card.className = "news-card";
+      card.innerHTML = `
+        <div class="date">${date || ""}</div>
+        <h3>${title || ""}</h3>
+        <p>${text || ""}</p>
+      `;
+      container.appendChild(card);
+    });
+  })
+  .catch(() => {
+    document.getElementById("news-container").innerHTML =
+      '<div class="empty">خطا در بارگذاری اخبار. لطفاً بعداً دوباره امتحان کنید.</div>';
+  });
+</script>
+
+</body>
+</html>
